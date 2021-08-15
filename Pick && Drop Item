@@ -9,6 +9,7 @@ int i;//pointer
 
 //Pick an Item START
 void PickUp(int Item, int Quantity) {
+i=0;
     // check if already have unique items and stack items
     for (i = 0; i <= sizeof Inventory[0][0]; i++) {
         //see if you already have a unique item
