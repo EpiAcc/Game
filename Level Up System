@@ -1,0 +1,93 @@
+//lvl up START
+int ClassCode[4] = { 0,1,2,3 };
+string Classes[2][4] = { { "Warrior","Monk", "Mage", "Archer"},
+                         { "Active","Active", "Inactive", "Active"} };
+int Classe = 3;
+//lvl up ENDS
+
+//XP earn START
+int MyLevelArray[6] = { 0,1,2,3,4,5 };
+int MyCharMaxXPArray[6] = { 0,10,20,30,40,50 };
+int MyXPUniversal;
+int lvl;//pointer
+//XP earn ENDS
+
+//lvl up START
+void LevelUp(int classe) {
+    i = 0;
+    //checking what class we are and add stats on base of that
+    if (classe == 0) {
+        Str = Str + 10;
+        cout << "I'm a Warrior and my my Str it is " << Str << " and my Dex it is " << Dex << " and my Int it is " << Int << "\n";
+    }
+    else if (classe == 1) {
+        Dex = Dex + 10;
+        cout << "I'm a Monk and my my Str it is " << Str << " and my Dex it is "<< Dex << " and my Int it is " << Int << "\n";
+    }
+    else if (classe == 2) {
+        Int = Int + 10;
+        cout << "I'm a Mage and my my Str it is " << Str << " and my Dex it is " << Dex << " and my Int it is " << Int << "\n";
+    }
+    else if (classe == 3) {
+        Dex = Dex + 10;
+        cout << "I'm a Archer and my my Str it is " << Str << " and my Dex it is " << Dex << " and my Int it is " << Int << "\n";
+    }
+}
+//lvl up ENDS
+// 
+//XP earn START
+void XPEarn(int MyLevel, int max_XP, int MyXP, int xp) {
+    lvl = 0;
+    cout << "Input lvl: " << MyLevel << " max_XP: " << max_XP << " MyXP: " << MyXP << " xp: " << xp << "\n";
+    //this run until the xp you earn it is not 0
+    while (xp > 0) {
+        //if the xp you earn it is not enough to level up 
+        if (max_XP > xp + MyXP) {
+            //sum my xp with xp I earn
+            MyXP = MyXP + xp; 
+            //put the xp I earn to 0
+            xp = 0; 
+            cout << "max_XP > xp + MyXP lvl: " << MyLevel << " max_XP: " << max_XP << " MyXP: " << MyXP << " xp: " << xp << "\n";
+        }
+        //if the xp you earn is more than tou need to level up
+        else if (max_XP < xp + MyXP) {
+            //level up
+            MyLevel++;
+            //I putted all my xp in the same variable
+            xp = xp + MyXP;
+            //my xp stay at 0 until no xp to level up again
+            MyXP = 0; 
+            //then I subtract all of that with xp we need to level up
+            xp = xp - max_XP;
+            //when level up the xp needed to level up increse as well, take my max xp per level in an array for now
+            max_XP = MyCharMaxXPArray[MyLevel]; 
+            cout << "max_XP < xp + MyXP lvl: " << MyLevel << " max_XP: " << max_XP << " MyXP: " << MyXP << " xp: " << xp << "\n";
+            //Here I summon my level up function with the classe I'm in the moment to increse stats
+            LevelUp(Classe); 
+        }
+        //if the xp you earn is exactly the same to level up run this 
+        else if (max_XP == xp + MyXP) {
+            //level up
+            MyLevel++;
+            //put the xp I earn to 0
+            xp = 0; 
+            //when level up the xp needed to level up increse as well, take my max xp per level in an array for now
+            max_XP = MyCharMaxXPArray[MyLevel];
+            //when level up and no xp left
+            MyXP = 0; 
+            cout << "max_XP = xp + MyXP lvl: " << MyLevel << " max_XP: " << max_XP << " MyXP: " << MyXP << " xp: " << xp << "\n";
+            //Here I summon my level up function with the classe I'm in the moment to increse stats
+            LevelUp(Classe);
+        }
+        else {
+            cout << "nothing to do";
+            xp = 0;
+        }
+    }
+    lvl = MyLevel;
+    MyXPUniversal = MyXP;
+    MyLevelArray[lvl];
+    MyCharMaxXPArray[lvl];
+    cout << "I'm finished with Level " << MyLevelArray[lvl] << " Max xp " << MyCharMaxXPArray[lvl] << " MyXP: " << MyXP << " xp: " << xp << "\n";
+}
+//XP earn END
