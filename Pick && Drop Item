@@ -1,0 +1,94 @@
+//PickUp Items START
+int ItemsCode[5] = { 0,1,2,3,4 };
+string ItemsName[2][5] = { { "None",    "Gloves",   "sword", "Rock", "Feather"},
+                           {"None",   "Not Unique", "Unique", "Stack", "Stack"} };
+int Inventory[2][5] = { {1, 4, 2, 0, 3},
+                        {1, 3, 1, 0, 2 } };
+int i;//pointer
+//PickUp Items END
+
+//Pick an Item START
+void PickUp(int Item, int Quantity) {
+    // check if already have unique items and stack items
+    for (i = 0; i <= sizeof Inventory[0][0]; i++) {
+        //see if you already have a unique item
+        if (Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] == "Unique") {
+            cout << Item << Inventory[0][i] << ItemsCode[2] << " I only can take 1 Item of this \n";
+            Item = 0;
+        }
+        //see if you already have a stack item
+        else if (Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] == "Stack") { 
+            cout << Item << Inventory[0][i] << ItemsCode[Inventory[0][i]] << "puting in the bag a stack item " << ItemsName[0][Inventory[0][i]] << "\n";
+            //puting item on the inventory
+            Inventory[1][i] = Inventory[1][i] + Quantity;
+            cout << "I have " << Inventory[1][i] << " " << ItemsName[0][Inventory[0][i]] << " now " << "\n";
+            Item = 0;
+        }
+    }i = 0;
+    //Check inventory
+    while (i <= sizeof Inventory[0][0] && Item != 0) {
+        // if slot free pick up
+       if (Inventory[0][i] == 0) { 
+            cout << "puting in the bag \n";
+            //puting item on the inventory
+            Inventory[0][i] = ItemsCode[Item];
+            Inventory[1][i]++;
+            Item = 0;
+            cout << "I picked it up " << ItemsName[0][Inventory[0][i]] << "\n";
+        }
+       // checking if have space
+        else if (i == sizeof Inventory[0][0] && Inventory[0][i] != 0) {// checking if have space
+            cout << i << Inventory[0][i] << "I have my inventory full \n";
+            Item = 0;
+        }
+        else {
+           //debug
+            cout << i  <<  Inventory[0][i] << " Nothing to do \n" ;
+            i++;
+        }
+    }
+}
+//Pick an Item END
+
+//Drop an Item START
+void DropItem(int Item, int Quantity) {
+    i = 0;
+        while (i <= sizeof Inventory[0][0] && Item != 0) {
+        //see if it is a stack item 
+        if (Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] == "Stack" && Inventory[1][i] > Quantity) { 
+            cout << "removing in the bag a stack item " << ItemsName[0][Inventory[0][i]] << "\n";
+            //removing item on the inventory
+            Inventory[1][i] = Inventory[1][i] - Quantity;
+            cout << "I have " << Inventory[1][i] << " " << ItemsName[0][Inventory[0][i]] << " now " << "\n";
+            Item = 0;
+        }
+        //see if it is a stack item and if dropping all
+        else if(Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] == "Stack" && Inventory[1][i] == Quantity){
+            cout << "removing totally in the bag a stack item " << ItemsName[0][Inventory[0][i]] << "\n";
+            //removing item on the inventory
+            Inventory[1][i] = Inventory[1][i] - Quantity;
+            Inventory[0][i] = 0;
+            Item = 0;
+        }
+        //if you tried to remove more than you have
+        else if (Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] == "Stack" && Inventory[1][i] < Quantity) { 
+            cout << "I dont have so much of " << ItemsName[1][ItemsCode[Inventory[0][i]]] << "\n";
+            Item = 0;
+        }
+        //Non stack Item
+        else if (Item == Inventory[0][i] && ItemsName[1][ItemsCode[Inventory[0][i]]] != "Stack"){
+            cout << "non stack item Removing " << ItemsName[0][Inventory[0][i]] << "\n";
+            //removing item on the inventory
+            Inventory[1][i] = 0;
+            Inventory[0][i] = 0; 
+            Item = 0;
+        }
+        else {
+            //debug
+            cout << i << Inventory[0][i] << " Nothing to do \n";
+            i++;
+        }
+        
+    }
+}
+//Drop an Item END
